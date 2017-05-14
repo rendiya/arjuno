@@ -1,33 +1,65 @@
+#!/usr/bin/env python
+# Years till 100
 import sys
-from optparse import OptionParser
-from libs import check_serial
-
-def optional_arg(arg_default):
-    def func(option,opt_str,value,parser):
-        if parser.rargs and not parser.rargs[0].startswith('-'):
-            val=parser.rargs[0]
-            parser.rargs.pop(0)
-        else:
-            val=arg_default
-        setattr(parser.values,option.dest,val)
-    return func
-
-def example():
-    return "v0.1"
-
-if __name__ == "__main__":
-    parser = OptionParser()
-    parser.add_option("-v","--version",dest="version",help="display version",action='callback',callback=optional_arg('empty'))
-    parser.add_option("-c","--check",dest="check_serial",help="check serial available",action='callback',callback=optional_arg('empty'))
-    parser.add_option("-r","--read",dest="read_serial",help="read string to serial device",action='callback',callback=optional_arg('empty'))
-    parser.add_option("-w","--write",dest="write_serial",help="write string to serial device",action='callback',callback=optional_arg('empty'))
+import optparse
+import time
+from libs import name,version
+from libs.telebot import main,main_tele
+from libs.check_serial import serial_ports
 
 
-    (options, args) = parser.parse_args(sys.argv)
-    if options.version:
-        print example()
-    elif options.check_serial:
-        print check_serial.serial_ports()
-    elif options.read_serial and option.write_serial:
-        print "asd"
-    
+parser = optparse.OptionParser()
+
+parser.add_option('-v', '--version', dest='version', help='version SDK serial',action='store_true')
+parser.add_option('-a', '--available', dest='check_serial', help='check available serial port',action='store_true')
+parser.add_option('-r', '--read', dest='read_serial', help='read data input in serial',action='store_true')
+parser.add_option('-s', '--serialport', dest='serial_port', help='open serial with port')
+parser.add_option('-b', '--baudrate', dest='baudrate', help='baudrate serial port')
+parser.add_option('--run', dest='run', help='run serial over socket',action='store_true')
+parser.add_option('--host', dest='host', help='host socket available',default='localhost:3000')
+parser.add_option('--telegram', dest='telegram', help='run sdk with telegram api',action='store_true')
+parser.add_option('--delay',dest='delay',help='give delay command',default=2)
+
+(options, args) = parser.parse_args()  
+
+# if options:
+#     print "please input command example {name} -h".format(name=name())
+if options.version:
+    print version
+
+elif options.check_serial:
+    print serial_ports()
+
+elif options.read_serial:
+    if options.serial_port and options.baudrate:
+        print main(options.serial_port,options.baudrate)
+    else:
+        print "please import baudrate and serial port"
+
+elif options.run:
+    print "this options under development"
+    #print options.serialport
+    # while True:
+    #     print "websocket running....."
+    #     time.sleep(1)
+
+elif options.telegram:
+
+    serial_port = options.serial_port
+    baudrate = options.baudrate
+    print "telegram running ....."
+
+    if serial_port and baudrate:
+        while True:
+            
+            try:
+                main_tele(port=serial_port,baudrate=baudrate)
+                time.sleep(int(options.delay))
+            except Exception as e:
+                pass
+            time.sleep(int(options.delay))
+
+    else:
+        print "Please insert baudrate and serial port"
+else:
+    print "please insert command example: arjuno -h"

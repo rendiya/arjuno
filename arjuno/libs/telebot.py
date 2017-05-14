@@ -16,7 +16,6 @@ def main_tele(port,baudrate):
 	"""
 	serial = Serializer(port=port,baudrate=baudrate)
 	data = serial.recv()
-	print data
 	data = data.split("|")
 	token = data[1]
 	command = data[0]

@@ -9,6 +9,6 @@ for name in string:
 
 
 if string:
-	os.system("python arjuno/bin.py {string}".format(string=null))
+	os.system("python arjuno/cli.py {string}".format(string=null))
 else:
-	os.system("python arjuno/bin.py")
+	os.system("python arjuno/cli.py")

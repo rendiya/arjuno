@@ -3,9 +3,9 @@
 import sys
 import optparse
 import time
-from arjuno.libs import name,version
-from arjuno.libs.telebot import main,main_tele
-from arjuno.libs.check_serial import serial_ports
+from libs import name,version
+from libs.telebot import main,main_tele
+from libs.check_serial import serial_ports
 
 def bin():
     parser = optparse.OptionParser()
@@ -37,11 +37,11 @@ def bin():
             print "please import baudrate and serial port"
 
     elif options.run:
-        print options.host
         #print options.serialport
-        while True:
-            print "websocket running....."
-            time.sleep(1)
+        # while True:
+        #     print "websocket running....."
+        #     time.sleep(1)
+        print "this options under development"
 
     elif options.telegram:
 
@@ -56,7 +56,12 @@ def bin():
                     main_tele(port=serial_port,baudrate=baudrate)
                     time.sleep(int(options.delay))
                 except Exception as e:
-                    print e
+                    #print e
+                    pass
+                time.sleep(int(options.delay))
 
         else:
             print "Please insert baudrate and serial port"
+
+    else:
+        print "please insert command example: arjuno -h"

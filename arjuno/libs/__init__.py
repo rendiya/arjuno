@@ -1,4 +1,4 @@
 
 name = "arjuno sdk-serial"
 
-version = "v0.1"
+version = "0.0.1"

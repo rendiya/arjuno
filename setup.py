@@ -2,6 +2,7 @@ import os
 import sys
 from distutils.sysconfig import get_python_lib
 from setuptools import setup, find_packages
+from arjuno.libs import version
 
 overlay_warning = False
 if "install" in sys.argv:
@@ -24,7 +25,7 @@ except:
     
 setup (
     name='arjuno',
-    version='0.0.0.27',
+    version=version,
     url='https://github.com/rendiya/arjuno',
     author='rendiya',
     author_email='ligerrendy@gmail.com',

@@ -9,11 +9,9 @@ class TelegramBot(object):
 
     def read_message(self):
         uri = 'https://api.telegram.org/bot{token}/getUpdates'.format(token=self.token)
-        print uri
         response = urllib2.urlopen(uri)
         data = response.read()
         data = json.loads(data)
-        print data
 
         data_tele= data['result'][0]
         if len(data)>0:
@@ -30,12 +28,11 @@ class TelegramBot(object):
         chat_id = chat_id
         uri = 'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={isi}'.format(chat_id=chat_id, token=self.token, isi=text_encoded)
         response = urllib2.urlopen(uri)
-        print uri
 
     def get_chat_id(self):
         data = self.read_message()
         for i in data:
-            print data
+            data
 
         return data
 # okay decompyling tele.pyc 
